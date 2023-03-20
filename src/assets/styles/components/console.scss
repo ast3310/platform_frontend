@@ -1,0 +1,42 @@
+.console {
+    padding: 0 20px;
+    // position: absolute;
+    // top: 0; left: 0;
+    width: 100%;
+    // height: 236px;
+    @include mediaQueryMax(2000px) {
+        // height: 396px;
+    }
+    &-header {
+        position: relative;
+        padding-bottom: $elems_gap;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 5px;
+    }
+    &_projectName {
+        position: absolute;
+        top: calc(50% - 9px);
+        left: calc(50% - 150px);
+        font-size: 18px;
+        line-height: 18px;
+        width: 300px;
+    }
+    &-projectData {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $elems_gap;
+    }
+    &_text {
+        flex: 1;
+        &:nth-child(2) {
+            flex: 2;
+        }
+        &:nth-child(3) {
+            break-after: always;
+        }
+    }
+}
+
+@import './controls';

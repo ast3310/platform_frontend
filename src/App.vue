@@ -1,30 +1,28 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div id="root">
+    <map name="home_link">
+      <area shape="default" 
+      @click="$router.push({ path: '/' })"
+      style="cursor: pointer;"
+      alt="ООО &quot;Партнёр&quot;">
+    </map>
+    <Header/>
+    <main class="main">
+      <div class="main-container container">
+        <router-view/>
+      </div>
+    </main>
+  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+// @ is an alias to /src
+import Header from '@/components/Header.vue'
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+export default {
+  name: 'App',
+  components: {
+    Header
   }
 }
-</style>
+</script>

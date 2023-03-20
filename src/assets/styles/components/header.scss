@@ -1,0 +1,12 @@
+.header {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: $header_height;
+    background-color: #fff;
+    &-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 100px;
+    }
+}

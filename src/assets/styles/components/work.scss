@@ -1,0 +1,119 @@
+.work {
+    margin-top: 10px;
+    height: 350px; min-width: 250px;
+    &--geodezist {
+        &.work {
+            width: 350px;
+        }
+        .work {
+            &-input {
+                &__wrapper {
+                    flex: 2;
+                }
+            }
+            &-select {
+                flex: 3;
+            }
+        }
+    }
+    &--estiomation {
+        .work {
+            width: 250px;
+        }
+    }
+    &--agreement {
+        .work {
+            &-main {
+                display: grid;
+                grid-template-columns: repeat(12, 1fr);
+                grid-template-rows: repeat(12, 1fr);
+                gap: 5px;
+                width: 550px;
+            }
+            &-textarea {
+                &__wrapper {
+                    grid-column: 1 / 9;
+                    grid-row: 1 / 11;
+                    display: flex;
+                    width: 100%; height: 100%;
+                }
+                width: 100%; height: 100%;
+            }
+            &-input {
+                &__wrapper {
+                    flex: 1;
+                }
+                &__list {
+                    grid-column: 1 / 9;
+                    grid-row: 11 / 13;
+                    display: flex;
+                    width: 100%; height: 100%;
+                    gap: 5px;
+                }
+                width: 100%;
+            }
+            &-agreement {
+                &-block {
+                    padding: 15px 10px;
+                    grid-column: 9 / 13;
+                    grid-row: 1 / 13;
+                    height: 100%;
+                    background-color: #fff;
+                    border-radius: 30px;
+                }
+                &-list {
+                    padding: 10px;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    overflow-y: scroll;
+                }
+                padding: 0 5px;
+                border-radius: 8px;
+                word-wrap: break-word;
+                transition: all .2s linear;
+                &:hover {
+                    cursor: pointer;
+                    background-color: $PRIMARY;
+                    transform: scale(1.1);
+                    color: white;
+                }
+            }
+        }
+    }
+    &-window {
+        height: 100%; width: 100%;
+    }
+    &-header {
+        height: 30px; width: 100%;
+    }
+    &-main {
+        height: 290px; width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        gap: 15px;
+        &-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+    }
+    &-footer {
+        height: 30px; width: 100%;
+    }
+    &-textarea {
+        resize: none;
+    }
+    &-input {
+        &__wrapper {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        width: 100%;
+    }
+}

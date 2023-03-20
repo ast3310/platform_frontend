@@ -1,0 +1,163 @@
+.listElem {
+    &-content {
+        padding: 5px 10px;
+        display: grid;
+        height: fit-content;
+        grid-template-columns: 50px repeat(23, 1fr);
+        align-items: center;
+        gap: 10px;
+        background-color: #fff;
+        border-radius: 40px;
+        box-shadow: 0 4px 9px rgba(black, .14);
+        transition: $animation;
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: 0 4px 9px rgba(black, .24);
+        }
+    }
+
+    @include mediaQueryMax(2000px) {
+        &-param1 {
+            grid-column: 1 / 2;
+        }
+
+        &-param2 {
+            grid-column: 2 / 4;
+        }
+
+        &-param3 {
+            grid-column: 4 / 6;
+        }
+
+        &-param4 {
+            grid-column: 6 / 8;
+        }
+
+        &-param5 {
+            grid-column: 8 / 11;
+        }
+
+        &-param6 {
+            grid-column: 11 / 13;
+        }
+
+        &-param7 {
+            grid-column: 13 / 15;
+        }
+
+        &-param8 {
+            grid-column: 15 / 19;
+        }
+
+        &-param9 {
+            grid-column: 19 / 20;
+        }
+
+        &-param10 {
+            grid-column: 20 / 24;
+        }
+
+        &-param11 {
+            grid-column: 24 / 24;
+        }
+    }
+
+    &-param1 {
+        grid-column: 1 / 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-weight: 900;
+        background-color: $GRAY_300;
+    }
+
+    &-param2 {
+        grid-column: 2 / 4;
+    }
+
+    &-param3 {
+        grid-column: 4 / 6;
+    }
+
+    &-param4 {
+        grid-column: 6 / 8;
+    }
+
+    &-param5 {
+        grid-column: 8 / 10;
+    }
+
+    &-param6 {
+        grid-column: 10 / 12;
+    }
+
+    &-param7 {
+        grid-column: 12 / 14;
+    }
+
+    &-param8 {
+        grid-column: 14 / 20;
+    }
+
+    &-param9 {
+        grid-column: 21 / 22;
+    }
+
+    &-param10 {
+        grid-column: 22 / 24;
+    }
+
+    &-param11 {
+        grid-column: 24 / 24;
+    }
+
+    .client {
+        &_name {
+            grid-column: 2 / 13;
+        }
+    }
+
+    &-stage {
+        &-steps {
+            display: inline-flex;
+            align-items: center;
+            width: 100%;
+            gap: 2px;
+        }
+
+        &-step {
+            flex: 1;
+            width: auto;
+            height: 10px;
+            background-color: $GRAY_300;
+            border-radius: 5px;
+
+            &.green {
+                background-color: $GREEN;
+            }
+
+            &.purple {
+                background-color: $BLUE;
+            }
+        }
+    }
+
+    &_days {
+        display: block;
+    }
+
+    &_attention {
+        width: 20px;
+        height: 20px;
+
+        svg {
+            fill: $PRIMARY;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <IndexConsole />
+    <section class="view">
+      <ul class="view-params view-params--projects">
+        <li class="view-param">Шифр</li>
+        <li class="view-param">Заказчик</li>
+        <li class="view-param">Местоположение</li>
+        <li class="view-param">Кадастр</li>
+        <li class="view-param">Параметры</li>
+        <li class="view-param">Сумма</li>
+        <li class="view-param">Стадия работы</li>
+      </ul>
+      <ul class="view-list view-list--projects">
+        <ProjectItem/>
+      </ul>
+    </section>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import IndexConsole from "../components/consoles/IndexConsole.vue"
+import ProjectItem from "../components/ProjectItem.vue"
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    IndexConsole,
+    ProjectItem,
   }
 }
 </script>
