@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <BaseLayout>
     <IndexConsole />
     <section class="view">
       <ul class="view-params view-params--projects">
@@ -15,10 +15,12 @@
         <ProjectItem/>
       </ul>
     </section>
-  </div>
+  </BaseLayout>
 </template>
 
 <script>
+import BaseLayout from "../layouts/BaseLayout.vue"
+
 import IndexConsole from "../components/consoles/IndexConsole.vue"
 import ProjectItem from "../components/ProjectItem.vue"
 
@@ -27,6 +29,7 @@ export default {
   components: {
     IndexConsole,
     ProjectItem,
+    BaseLayout,
   }
 }
 </script>

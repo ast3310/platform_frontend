@@ -1,7 +1,7 @@
 <template>
     <li class="card">
         <div class="card-main">
-            <div class="card_name">{{ name }}</div>
+            <div class="card_name">{{ card.stage_label_ru }}</div>
             <div class="card-content">
                 <div class="card-user" v-if="isChoosed">
                     <div class="card-user_name">Иванченко К. Р.</div>
@@ -31,16 +31,15 @@
 export default {
     name: 'Card',
 
+    data: () => ({
+        isChoosed: false,
+    }),
+
     props: {
-        name: {
-            type: String,
+        card: {
+            type: Object,
             required: false,
         },
-        isChoosed: {
-            type: Boolean,
-            required: true,
-        },
-
     }
 }
 </script>
