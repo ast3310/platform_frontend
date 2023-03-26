@@ -21,6 +21,8 @@
                     <li class="card-list-item">Иванченко К. Р.</li>
                     <li class="card-list-item">Иванченко К. Р.</li>
                     <li class="card-list-item">Иванченко К. Р.</li>
+                    <li class="card-list-item">Иванченко К. Р.</li>
+                    <li class="card-list-item">Иванченко К. Р.</li>
                 </ul>
             </div>
         </div>
