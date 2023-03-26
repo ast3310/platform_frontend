@@ -1,17 +1,6 @@
 <template>
-  <div id="root">
-    <map name="home_link">
-      <area shape="default" 
-      @click="$router.push({ path: '/' })"
-      style="cursor: pointer;"
-      alt="ООО &quot;Партнёр&quot;">
-    </map>
-    <Header/>
-    <main class="main">
-      <div class="main-container container">
-        <router-view/>
-      </div>
-    </main>
+  <div>
+    <router-view />
   </div>
 </template>
 
@@ -23,6 +12,11 @@ export default {
   name: 'App',
   components: {
     Header
+  },
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    }
   }
 }
 </script>

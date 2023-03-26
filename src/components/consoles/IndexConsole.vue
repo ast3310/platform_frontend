@@ -21,8 +21,7 @@
                 </div>
                 <ul class="card-parentList">
                     <Card 
-                        :name="card.name" 
-                        :isChoosed="card.isChoosed" 
+                        :card="card"
                         v-for="card in cards"/>
                 </ul>
             </form>
@@ -32,6 +31,7 @@
     
 <script>
 import Card from "../Card.vue";
+import tasks from "../../api/tasks";
 
 export default {
     name: 'IndexConsole',
@@ -41,49 +41,12 @@ export default {
     },
 
     data: () => ({
-        cards: [
-           {
-            isChoosed: true,
-            name: "Обследование"
-           },
-           {
-            isChoosed: true,
-            name: "Обследование"
-           },
-           {
-            isChoosed: false,
-            name: "Обследование"
-           },
-           {
-            isChoosed: true,
-            name: "Обследование"
-           },
-           {
-            isChoosed: true,
-            name: "Обследование"
-           },
-           {
-            isChoosed: false,
-            name: "Обследование"
-           },
-           {
-            isChoosed: true,
-            name: "Обследование"
-           },
-           {
-            isChoosed: true,
-            name: "Обследование"
-           },
-           {
-            isChoosed: false,
-            name: "Обследование"
-           },
-           {
-            isChoosed: true,
-            name: "Обследование"
-           },
-        ]
+        cards: []
     }),
+
+    async mounted() {
+        this.cards = await (await tasks.getStagesList()).data;
+    },
 
 }
 </script>
