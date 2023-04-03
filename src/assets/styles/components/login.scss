@@ -16,6 +16,17 @@
         }
     }
 
+    &__error {
+        transition: $animation;
+        background-color:  lighten($RED, 40%);
+        padding: 20px;
+        font-size: 14px;
+        color: #8d5757;
+        border-radius: 20px;
+        border: 1px solid lighten($RED, 20%);
+        min-width: 350px;
+    }
+
     &_button {
         width: 100%;
 

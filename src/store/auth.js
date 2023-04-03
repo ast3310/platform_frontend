@@ -6,6 +6,10 @@ export default {
     currentUser: null,
   },
   actions: {
+    async fetchCurrentUser({ commit }) {
+        const { data } = await axios.get("/api/users/profile/");
+        commit("setCurrentUser", data);
+      },
     async createToken({ commit, dispatch }, payload) {
       try {
         const tokenData = await axios.post(
@@ -24,10 +28,6 @@ export default {
       } catch (e) {
         return {
           error: true,
-          accountActivated: !(
-            e.response.data.non_field_errors[0] ===
-            "Unable to log in with provided credentials."
-          ),
         };
       }
 
@@ -173,18 +173,13 @@ export default {
     async logout({ commit }) {
       commit("logout_mutations");
     },
-    async fetchCurrentUser({ commit }) {
-      const { data } = await axios.get("/api/users/profile/");
-      commit("setCurrentUser", data);
-      console.log(getters.currentUser);
-    },
   },
   mutations: {
     logout_mutations(state) {
       delete axios.defaults.headers["Authorization"];
       state.currentUser = null;
     },
-    setCurrentUser(state, currentUser) {
+    setCurrentUser(state, UserData) {
       if (state.currentUser) {
         state.currentUser = { ...state.currentUser, ...UserData };
       } else {
