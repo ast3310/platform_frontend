@@ -13,11 +13,36 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/SignInView.vue')
-  }
+    component: () => import('../views/SignInView.vue')
+  },
+  {
+    path: '/task/:id',
+    name: 'task',
+    component: () => import('../views/TaskView.vue'),
+    meta: { accessTokenExpected: true },
+  },
+  {
+    path: '/clients',
+    name: 'clients',
+    component: () => import('../views/ClientsView.vue'),
+    meta: { accessTokenExpected: true },
+  },
+  {
+    path: '/agreements',
+    name: 'agreements',
+    component: () => import('../views/AgreementsView.vue'),
+    meta: { accessTokenExpected: true },
+  },
+  {
+    path: "/404",
+    name: '404',
+    component: () => import('../views/NotFoundView.vue'),
+    meta: { accessTokenExpected: true },
+  },
+  {
+    path: "/:catchAll(.*)", 
+    redirect: '/404',
+  },
 ]
 
 const router = createRouter({

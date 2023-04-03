@@ -2,6 +2,9 @@
     <div class="login">
         <div class="logo__wrapper"><img class="logo" src="@/assets/images/logo.svg" alt="Типография 'Запад'"
                 usemap="#home_link" /></div>
+        <transition name="fade">
+            <div class="login__error" v-if="!!error">{{ error }}</div>
+        </transition>
         <div class="login_input__wrapper"><input class="login_input input" name="number" placeholder="Логин" type="text"
                 v-model="username" /></div>
         <div class="login_input__wrapper"><input class="login_input input" name="location" placeholder="Пароль"
@@ -11,23 +14,32 @@
 </template>
   
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+
 
 export default {
     name: 'SignInView',
     data: () => ({
         username: "",
         password: "",
-        loading: false
+        loading: false,
+        error: null,
     }),
-    mounted() { },
+    mounted() {
+        if (!!this.currentUser) this.$router.push('/');
+    },
+    computed: {
+        ...mapGetters(["currentUser"]),
+    },
     methods: {
         ...mapActions({
             createToken: "createToken",
+            fetchCurrentUser: "fetchCurrentUser",
         }),
 
         async handlerLogin() {
             if (!this.username && !this.password) return;
+            this.error = null;
             this.loading = true;
             const result = await this.createToken({
                 username: this.username,
@@ -38,7 +50,12 @@ export default {
             if (!result.error) {
                 this.murren_username = "";
                 this.murren_password = "";
-                this.$router.push('index');
+                await this.fetchCurrentUser();
+                this.$router.push({ name: 'home'});
+            }
+            else {
+                
+                this.error = "Неправильный пароль или логин";
             }
         }
     }

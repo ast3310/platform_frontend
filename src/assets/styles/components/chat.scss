@@ -8,12 +8,49 @@
         border-radius: 20px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between
-        // align-items: center;
+        justify-content: space-between;
     }
     &-messages {
         height: 295px;
+        overflow: scroll;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 20px;
+        padding: 0px 10px;
+        padding-bottom: 10px;
     }
+    &-message {
+        display: flex;
+        gap: 10px;
+        
+        &_my {
+            flex-direction: row-reverse;
+        }
+
+        &__user-image {
+            border-radius: 50%;
+            width: 30px;
+
+            &_i {
+                width: 100%;
+                margin-top: auto;
+            }
+        }
+
+        &__content {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+
+        &__user {
+            color: $PRIMARY;
+            margin-bottom: 5px;
+        }
+    }
+
     &-input {
         &__wrapper {
             position: relative;

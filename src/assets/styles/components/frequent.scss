@@ -38,6 +38,47 @@
     }
 }
 
+#loader {
+    position: absolute;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    display: flex;
+    align-items: center;
+}
+
+.loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 68px;
+    height: 68px;
+    margin: 0 auto;
+
+    &:after {
+        content: " ";
+        display: block;
+        width: 42px;
+        height: 42px;
+        margin: 8px;
+        border-radius: 50%;
+        border-width: 4px;
+        border-style: solid;
+        border-color: $PRIMARY transparent $PRIMARY $PRIMARY;
+        animation: loader .8s linear infinite;
+    }
+}
+
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .button {
     position: relative;
     padding: 0 15px;
@@ -76,6 +117,11 @@
     &:focus {
         box-shadow: 0 4px 9px rgba(black, .24);
     }
+}
+
+.input__error {
+    border: 1px solid rgb(255, 125, 125);
+    transition: $animation;
 }
 
 .card {
@@ -121,6 +167,9 @@
         &.green {
             background-color: $GREEN;
         }
+        &.purple {
+            background-color: $PRIMARY;
+        }
     }
 
 
@@ -136,7 +185,7 @@
         height: calc(90% - 30px);
     }
 
-    &-user {
+    &_user {
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -147,6 +196,12 @@
             border-radius: 20px;
             background-color: $PRIMARY;
             color: white;
+            cursor: pointer;
+            transition: $animation;
+
+            &_editable:hover {
+                background-color: $RED;
+            }
         }
 
         &_photo {
@@ -200,4 +255,15 @@
             background-color: $RED;
         }
     }
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

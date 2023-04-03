@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
 
 import auth from "./auth";
+import tasks from "./tasks/index";
+import agreements from "./agreements/index";
 import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
@@ -10,6 +12,8 @@ export default createStore({
     }),
   ],
   modules: {
-    auth
+    auth,
+    tasks,
+    agreements,
   }
 })
