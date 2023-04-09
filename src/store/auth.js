@@ -36,66 +36,6 @@ export default {
         accountActivated: true,
       };
     },
-    async createUser(_, payload) {
-      let results = {
-        UserIsCreated: false,
-        uniqueName: false,
-        uniqueEmail: false,
-        passwordIsTooCommon: false,
-        recaptchaError: false,
-        passwordIsTooSimilarToUsername: false,
-        passwordIsTooSimilarToEmail: false,
-      };
-      try {
-        const { status } = await axios.post("/auth/users/", payload);
-
-        if (status === 201) {
-          results.UserIsCreated = true;
-        }
-
-        return results;
-      } catch (e) {
-        if (
-          e.response.data.username &&
-          e.response.data.username[0] ===
-            "A user with that username already exists."
-        ) {
-          results.uniqueName = true;
-        }
-
-        if (
-          e.response.data.email &&
-          e.response.data.email[0] === "user with this email already exists."
-        ) {
-          results.uniqueEmail = true;
-        }
-
-        if (
-          e.response.data.password &&
-          e.response.data.password[0] === "This password is too common."
-        ) {
-          results.passwordIsTooCommon = true;
-        }
-
-        if (
-          e.response.data.password &&
-          e.response.data.password[0] ===
-            "The password is too similar to the username."
-        ) {
-          results.passwordIsTooSimilarToUsername = true;
-        }
-
-        if (
-          e.response.data.password &&
-          e.response.data.password[0] ===
-            "The password is too similar to the email."
-        ) {
-          results.passwordIsTooSimilarToEmail = true;
-        }
-        
-        return results;
-      }
-    },
     async requestResetPassword(_, payload) {
       try {
         let results = {
