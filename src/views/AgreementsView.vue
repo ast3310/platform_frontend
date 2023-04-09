@@ -92,7 +92,6 @@ export default {
             message: 'Cогласующий успешно добавлен',
             type: 'success',
           });
-          this.clearInputs();
         } else {
           ElMessage({
             message: 'Ошибка подключения или сбой сети',

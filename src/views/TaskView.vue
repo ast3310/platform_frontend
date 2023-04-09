@@ -1,46 +1,58 @@
 <template>
     <BaseLayout>
-        <ProjectConsole v-if="!isLoading"/>
+        <ProjectConsole v-if="!!task" />
         <section class="view">
+            <ul class="stages"
+                v-if="!!task?.agreements && (isHarmonization || isFinished )">
+                <AgreementItem :isEditable="isAgreementEditable" :agreement="agreement"
+                    v-for="agreement in task.agreements" />
+            </ul>
             <div class="view-footer">
-                <Chat v-if="!isLoading" :task="task"/>
-                <Agreement v-if="!!task && task.now_stage_type == 3 && nowStageData.executor_id == currentUser.id"/>
+                <Chat v-if="!!task" :task="task" @chatLoaded="setChatLoaded" />
+                <Agreement v-if="!!task && isDesignStage && isCurrentUser" />
+                <Estimation v-if="!!task && isEstimation && isCurrentUser" />
             </div>
         </section>
     </BaseLayout>
 </template>
 
 <script>
-import BaseLayout from "../layouts/BaseLayout.vue"
+import BaseLayout from "../layouts/BaseLayout.vue";
 
-import ProjectConsole from "../components/consoles/ProjectConsole.vue"
-import Agreement from "../components/stages/Agreement.vue"
+import ProjectConsole from "../components/consoles/ProjectConsole.vue";
+import Agreement from "../components/stages/Agreement.vue";
+import Estimation from "../components/stages/Estimation.vue";
+import AgreementItem from "../components/stages/AgreementItem.vue";
 
-import Chat from "../components/Chat.vue"
+import Chat from "../components/Chat.vue";
 
 import EventEmitter from '../utils/EventEmitter';
+import { DESIGN, HARMONIZATION, ESTIMATED_DOCUMENTATION } from '../utils/stages';
 
 import { mapGetters } from "vuex";
 
-import { TASK_FETCH_ONE } from '../store/tasks/types.js'
+import { TASK_FETCH_ONE, TASK_CARD_SET } from '../store/tasks/types.js';
 
 export default {
     name: 'TaskView',
     components: {
         ProjectConsole,
         Agreement,
+        AgreementItem,
+        Estimation,
         BaseLayout,
         Chat,
     },
 
     data: () => ({
         isLoading: true,
+        chatIsLoading: true,
     }),
 
     async mounted() {
+        this.$store.commit(TASK_CARD_SET, null);
         EventEmitter.$emit('pageIsLoading');
         await this.fetchTask();
-        EventEmitter.$emit('pageIsLoaded');
     },
 
     computed: {
@@ -51,6 +63,27 @@ export default {
         nowStageData() {
             const index = this.task.stages.findIndex(x => x.id === this.task.now_stage_id);
             return this.task.stages[index];
+        },
+        isCurrentUser() {
+            return this.nowStageData.executor_id == this.currentUser.id;
+        },
+        isDesignStage() {
+            return this.task.now_stage_type === DESIGN;
+        },
+        isHarmonization() {
+            return this.task.now_stage_type >= HARMONIZATION;
+        },
+        isEstimation() {
+            return this.task.now_stage_type === ESTIMATED_DOCUMENTATION;
+        },
+        isFinished() {
+            return this.task?.state === "Finished";
+        },
+        isAgreementEditable() {
+            return this.task.now_stage_type === HARMONIZATION && this.isCurrentUser;
+        },
+        isPageLoaded() {
+            return !this.chatIsLoading && !this.isLoading;
         }
     },
 
@@ -67,10 +100,15 @@ export default {
             this.isLoading = false;
         },
 
-        setExecutorsLoaded() {
-            this.isLoadingExicuturs = false;
-        },
+        setChatLoaded() {
+            this.chatIsLoading = false;
+        }
     },
 
+    watch: {
+        isPageLoaded: () => {
+            EventEmitter.$emit('pageIsLoaded');
+        },
+    }
 }
 </script>

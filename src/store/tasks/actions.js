@@ -6,8 +6,12 @@ import {
     TASK_FETCH_ONE,
     TASK_CARD_SET,
     TASKS_SET_DESIGN_DATA,
+    TASKS_SET_ESTIMATION_DATA,
+    TASKS_COMPLETE_AGREEMENT,
+    TASKS_CHANGE_AGREEMENT_DATA,
     TASKS_FETCH_MY_LIST,
     TASKS_SAVE_DESIGN_DATA,
+    TASKS_SAVE_ESTIMATION_DATA,
     TASKS_COMPLETE_STAGE,
     SET_COUNT_NEXT_PAGE,
 } from "./types.js";
@@ -103,8 +107,50 @@ export default {
         
         if (isSuccess === true) {
           commit(TASKS_SET_DESIGN_DATA, payload);
-          
-          console.log(getters.task)
+  
+          return {
+            success: true,
+          };
+        }
+  
+        return { success: false };
+      } catch (error) {
+        return { success: false };
+      }
+    },
+    async [TASKS_SAVE_ESTIMATION_DATA]({ commit, getters }, payload) {
+      try {
+        if (!getters.task) {
+          return { success: false };
+        }
+
+        const { isSuccess, data } = await tasks.saveEstimationData(getters.task.id, payload);
+        
+        if (isSuccess === true) {
+          commit(TASKS_SET_ESTIMATION_DATA, payload);
+  
+          return {
+            success: true,
+          };
+        }
+  
+        return { success: false };
+      } catch (error) {
+        return { success: false };
+      }
+    },
+    async [TASKS_COMPLETE_AGREEMENT]({ commit, getters }, { agreement_id }) {
+      try {
+        if (!getters.task) {
+          return { success: false };
+        }
+
+        console.log(agreement_id);
+
+        const { isSuccess, data } = await tasks.completeAgreement(getters.task.id, agreement_id);
+        
+        if (isSuccess === true) {
+          commit(TASKS_CHANGE_AGREEMENT_DATA, data);
   
           return {
             success: true,

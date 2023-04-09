@@ -31,6 +31,8 @@
 import users from '../api/users';
 import EventEmitter from '../utils/EventEmitter';
 
+import dateTime from '../utils/dateTime.js';
+
 export default {
     name: 'Card',
 
@@ -38,6 +40,7 @@ export default {
         isChoosed: false,
         page: 1,
         users: [],
+
         selectedUser: null,
         isLoaded: true,
         isAddTask: false,
@@ -56,42 +59,23 @@ export default {
             return !!this.selectedUser ? this.selectedUser : this.setedUser;
         },
         formatedFinishDate() {
-            if (!!this.finished_at) {
-                const date = new Date(this.finished_at);
-                const dateElements = {
-                    d: date.getDate().toString(),
-                    m: (date.getMonth() + 1).toString(),
-                    y: date.getFullYear().toString(),
-                }
-
-                for (let key in dateElements) {
-                    const element = dateElements[key];
-                    if (element.length < 2) dateElements[key] = '0' + element;
-                }
-
-                return `${dateElements.d}.${dateElements.m}.${dateElements.y}`
-            }
-            return '__.__.____';
+            return dateTime.formatedFinishDate(this.finished_at);
         },
         dateDelta() {
-            const start = new Date(this.started_at);
-            const finish = new Date(this.finished_at);
-            const diffTime = Math.abs(finish - start);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-            return diffDays;
+            return dateTime.dateDaysDelta(this.started_at, this.finished_at);
         },
     },
 
     methods: {
         async fetchUsers() {
             this.$emit("executorsLoading");
-            let data = await users.getList(
-                this.topic_id,
-                this.card.stage_type,
-                this.page,
-            );
+            const { isSuccess, data } = await users.getList({
+                page: this.page,
+                topic_id: this.topic_id,
+                role: this.card.stage_type,
+            });
 
-            if (data[0]) this.users = [...this.users, ...data[1].results];
+            if (isSuccess === true) this.users = [...this.users, ...data.results];
 
             this.$emit("executorsLoaded");
         },

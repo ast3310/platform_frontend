@@ -1,47 +1,28 @@
 <template>
   <header class="header">
     <div class="header-container container">
-      <div class="logo__wrapper"><img class="logo" src="@/assets/images/logo.svg" alt="Типография 'Запад'"
-          usemap="#home_link" /></div>
+      <div class="logo__wrapper">
+        <Logo @click="$router.push({ path: '/' })" style="cursor: pointer;" />
+      </div>
       <nav class="nav">
-        <li class="nav-item"><a class="nav-item--link link" href="#">
+        <li class="nav-item"><router-link class="nav-item--link link" to="/workers">
             <div class="nav-item_image">
-              <svg>
-                <use xlink:href="require(@/assets/images/sprite.svg#calculation)"></use>
-              </svg>
-            </div>
-            <div class="nav-item_name">Расчёт</div>
-          </a></li>
-        <li class="nav-item"><a class="nav-item--link link" href="#">
-            <div class="nav-item_image">
-              <svg>
-                <use xlink:href="require(@/assets/images/sprite.svg#statistic)"></use>
-              </svg>
-            </div>
-            <div class="nav-item_name">Статистика</div>
-          </a></li>
-        <li class="nav-item"><a class="nav-item--link link" href="workers.html">
-            <div class="nav-item_image">
-              <svg>
-                <use xlink:href="require(@/assets/images/sprite.svg#workers)"></use>
-              </svg>
+              <ClientsIcon/>
             </div>
             <div class="nav-item_name">Сотрудники</div>
-          </a></li>
+          </router-link></li>
         <li class="nav-item"><a class="nav-item--link link" href="clients.html">
             <div class="nav-item_image">
-              <svg>
-                <use xlink:href="require(@/assets/images/sprite.svg#clients)"></use>
-              </svg>
+              <WorkersIcon/>
             </div>
             <div class="nav-item_name">Клиенты</div>
           </a></li>
       </nav>
       <div class="user">
-        <div class="user_settings"><a class="user-settings--link link" href="#">
-            <svg>
-              <use xlink:href="require('@/assets/images/sprite.svg#settings')"></use>
-            </svg></a></div>
+        <div class="user_settings">
+          <a class="user-settings--link link" :href="`/userSettings/${currentUser.id}`">
+           <SettingsIcon />
+          </a></div>
         <div class="user-data">
           <div class="user_photo__wrapper"><img class="user_photo" src="@/assets/images/photo.png" alt="Рнтров И. И." />
           </div>
@@ -55,8 +36,20 @@
 <script>
 import { mapGetters } from "vuex";
 
+import SettingsIcon from '../assets/images/svgs/settings.svg';
+import WorkersIcon from '../assets/images/svgs/workers.svg';
+import ClientsIcon from '../assets/images/svgs/clients.svg';
+
+import Logo from '@/assets/images/logo.svg';
+
 export default {
   name: 'Header',
+  components: {
+    Logo,
+    SettingsIcon,
+    WorkersIcon,
+    ClientsIcon,
+  },
   computed: {
     ...mapGetters(["currentUser"]),
     userName() {

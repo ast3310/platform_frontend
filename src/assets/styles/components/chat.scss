@@ -19,12 +19,29 @@
         padding: 0px 10px;
         padding-bottom: 10px;
     }
+
+    &-message-date {
+        text-align: center;
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 3px 10px;
+        width: max-content;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+
     &-message {
+        position: relative;
         display: flex;
         gap: 10px;
         
         &_my {
             flex-direction: row-reverse;
+
+            > .chat-message__content > .chat-message__time  {
+                right: 0;
+                left: auto;
+            }
         }
 
         &__user-image {
@@ -48,6 +65,14 @@
         &__user {
             color: $PRIMARY;
             margin-bottom: 5px;
+        }
+
+        &__time {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            color: $GRAY_600;
         }
     }
 

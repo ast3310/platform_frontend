@@ -35,3 +35,14 @@
         }
     }
 }
+
+.error-big {
+    margin: 30px;
+    text-align: center;
+
+    &_code {
+        font-size: 30px;
+        font-weight: 400;
+        margin-top: 20px;
+    }
+}

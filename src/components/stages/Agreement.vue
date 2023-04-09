@@ -33,7 +33,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="work-footer"><button @click="saveData" class="work_button button">Сохранить</button></div>
+            <div class="work-footer"><button :disabled="isSaving" @click="saveData" class="work_button button">Сохранить</button></div>
         </div>
     </section>
 </template>
@@ -46,13 +46,14 @@ import Loader from "../common/Loader.vue";
 
 import { ElMessage } from "element-plus";
 
-import { TASKS_SAVE_DESIGN_DATA } from "../../store/tasks/types.js"
+import { TASKS_SAVE_DESIGN_DATA } from "../../store/tasks/types.js";
 
 export default {
     name: 'Agreement',
     data: () => ({
         existsNextPage: false,
         isLoading: false,
+        isSaving: false,
         agreements: [],
         selectedAgreements: {},
         page: 0,
@@ -99,6 +100,9 @@ export default {
                 this.existsNextPage = !!data.next;
             }
 
+            this.updateAgrements();
+            this.setDesignData();
+
             this.isLoading = false;
         },
         setDesignData() {
@@ -108,13 +112,6 @@ export default {
                 this.PRG = this.task.design_data.PRG;
 
                 this.description = this.task.design_data.description;
-
-                if (!!this.task.agreements) {
-                    this.task.agreements.forEach(element => {
-                        this.selectedAgreements[agreement.id] = agreement.name;
-                        this.agreements[index].isSelected = true;
-                    });
-                }
             }
         },
         selectAgreement(index) {
@@ -129,12 +126,27 @@ export default {
             }
         },
 
+        updateAgrements() {
+            if (!!this.task?.agreements) {
+                    this.task.agreements.forEach(element => {
+                        this.selectedAgreements[element.agreement_id] = element.name;
+                        for (let index = 0; index < this.agreements.length; index++) {
+                            if (this.agreements[index].id === element.agreement_id) {
+                                this.agreements[index].isSelected = true;
+                            }
+                        }
+                    });
+                }
+        },
+
         async saveData() {
             if (this.VD !== "" && this.ND !== "" && this.PRG !== "") {
                 let agreements = [];
                 Object.keys(this.selectedAgreements).forEach(element => {
                     agreements.push({ agreement_id: element })
                 });
+
+                this.isSaving = true;
 
                 const { success } = await this.$store.dispatch(
                     TASKS_SAVE_DESIGN_DATA,
@@ -158,6 +170,8 @@ export default {
                         type: 'error',
                     });
                 }
+
+                this.isSaving = false;
             } else {
                     ElMessage({
                         message: 'Заполните форму',

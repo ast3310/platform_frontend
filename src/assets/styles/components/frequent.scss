@@ -244,9 +244,23 @@
         min-width: 80px;
         background-color: #fff;
         border-radius: 20px;
+        transition: $animation;
+
         &:nth-child(10) {
             break-after: always;
         }
+
+        &-selectble {
+            cursor: pointer;
+            &:hover {
+                background-color: $GREEN;
+            }
+
+            .green:hover {
+                background-color: $RED;
+            }
+        }
+
         &.green {
             background-color: $GREEN;
         }

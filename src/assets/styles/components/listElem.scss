@@ -1,4 +1,8 @@
 .listElem {
+    &-param {
+        display: flex;
+        justify-content: center;
+    }
     &-content {
         padding: 5px 10px;
         display: grid;

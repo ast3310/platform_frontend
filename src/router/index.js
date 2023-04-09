@@ -22,16 +22,34 @@ const routes = [
     meta: { accessTokenExpected: true },
   },
   {
+    path: '/userSettings/:id',
+    name: 'userSettings',
+    component: () => import('../views/ProfileSettingsView.vue'),
+    meta: { accessTokenExpected: true },
+  },
+  {
     path: '/clients',
     name: 'clients',
     component: () => import('../views/ClientsView.vue'),
-    meta: { accessTokenExpected: true },
+    meta: { 
+      accessTokenExpected: true,
+      accessOnlyAdmin: true,
+    },
   },
   {
     path: '/agreements',
     name: 'agreements',
     component: () => import('../views/AgreementsView.vue'),
     meta: { accessTokenExpected: true },
+  },
+  {
+    path: '/workers',
+    name: 'workers',
+    component: () => import('../views/WorkersView.vue'),
+    meta: { 
+      accessTokenExpected: true,
+      accessOnlyAdmin: true,
+    },
   },
   {
     path: "/404",
@@ -51,12 +69,16 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(store.state.auth)
   const isTokenExpectedAndExist =
     (to.matched.some((r) => r.meta.accessTokenExpected) &&
       store.state.auth.currentUser) ||
     !to.matched.some((r) => r.meta.accessTokenExpected);
-  if (isTokenExpectedAndExist) {
+  
+  const isAdminAdminAccess =
+    (to.matched.some((r) => r.meta.accessOnlyAdmin) &&
+      store.state.auth?.currentUser?.is_staff) ||
+    !to.matched.some((r) => r.meta.accessOnlyAdmin);
+  if (isTokenExpectedAndExist && isAdminAdminAccess) {
     return next();
   }
   

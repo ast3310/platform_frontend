@@ -4,9 +4,6 @@
             <Loader/>
         </div>
     <div>
-        <map name="home_link">
-          <area shape="default" @click="$router.push({ path: '/' })" style="cursor: pointer;" alt="ООО &quot;Партнёр&quot;">
-        </map>
         <Header />
       <main class="main" v-show="!isLoading">
         <div class="main-container container">

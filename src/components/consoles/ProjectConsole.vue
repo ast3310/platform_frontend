@@ -12,8 +12,8 @@
                 <p class="console_text input">{{ task.address }}</p>
                 <p class="console_text input">{{ task.cadastral_number }}</p>
                 <p class="console_text input">{{ taskDesignData }}</p>
-                <p class="console_text input">Сумма</p>
-                <p class="console_text input">{{ task.cipher }}</p>
+                <p class="console_text input">{{ taskEstimationData }}</p>
+                <p class="console_text input">{{ task.now_stage_label }}</p>
             </div>
             <form class="controls">
                 <div class="controls-header"></div>
@@ -53,6 +53,10 @@ export default {
             return (!!this.task.design_data) ?
                 `ВД – ${this.task.design_data.VD}м НД – ${this.task.design_data.ND}м ПРГ - ${this.task.design_data.PRG}м3/ч` :
                 '-';
+        },
+        taskEstimationData() {
+            return (!!this.task.estimation_data) ?
+                new Intl.NumberFormat().format(this.task.estimation_data?.cost) + '₽' : '-';
         }
     },
 
@@ -80,7 +84,10 @@ export default {
         },
 
         async completeStage() {
-            if (this.task.now_stage_type === stages.DESIGN && !this.task.design_data) {
+            const hasDesignData = this.task.now_stage_type === stages.DESIGN && !this.task.design_data;
+            const hasEstimationData = this.task.now_stage_type === stages.ESTIMATED_DOCUMENTATION && !this.task.estimation_data;
+
+            if (hasDesignData || hasEstimationData) {
                 ElMessage({
                     type: 'error',
                     message: 'Необходимые данные не были сохранены',

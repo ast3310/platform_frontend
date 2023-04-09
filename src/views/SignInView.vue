@@ -1,7 +1,6 @@
 <template>
     <div class="login">
-        <div class="logo__wrapper"><img class="logo" src="@/assets/images/logo.svg" alt="Типография 'Запад'"
-                usemap="#home_link" /></div>
+        <div class="logo__wrapper"><Logo/></div>
         <transition name="fade">
             <div class="login__error" v-if="!!error">{{ error }}</div>
         </transition>
@@ -16,6 +15,8 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 
+import Logo from '@/assets/images/logo.svg';
+
 
 export default {
     name: 'SignInView',
@@ -25,6 +26,9 @@ export default {
         loading: false,
         error: null,
     }),
+    components: {
+        Logo,
+    },
     mounted() {
         if (!!this.currentUser) this.$router.push('/');
     },

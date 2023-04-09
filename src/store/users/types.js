@@ -1,0 +1,9 @@
+export const USERS_FETCH_LIST = 'USERS_FETCH_LIST';
+export const USERS_CREATE = 'USERS_CREATE';
+export const USERS_ADD_LIST = 'USERS_ADD_LIST';
+export const USERS_APPEND = 'USERS_APPEND';
+export const USERS_CARDS_CLEAR = 'USERS_CARDS_CLEAR';
+export const SET_COUNT_NEXT_PAGE = 'USERS_SET_COUNT_NEXT_PAGE';
+export const USER_SET = 'USER_SET';
+export const USER_FETCH_ONE = 'USER_FETCH_ONE';
+export const USER_UPDATE = 'USER_UPDATE';

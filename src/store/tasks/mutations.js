@@ -21,6 +21,18 @@ export default {
     }
   },
 
+  [type.TASKS_SET_ESTIMATION_DATA]: (state, payload) => {
+    if (!!state.task) {
+      state.task = { ...state.task, estimation_data: payload };
+    }
+  },
+
+  [type.TASKS_CHANGE_AGREEMENT_DATA]: (state, payload) => {
+    if (!!state.task) {
+      state.task.agreements = state.task.agreements.map(e => e.agreement_id === payload.agreement_id ? payload : e);
+    }
+  },
+
   [type.TASKS_CARDS_CLEAR]: (state) => (state.tasks = []),
   [type.TASK_CARD_SET]: (state, payload) => (state.task = payload),
 };

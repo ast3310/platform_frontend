@@ -3,7 +3,12 @@ import axios from "axios";
 const tasks = {
     getStagesList: async () => {
         let data = await axios.get('/api/tasks/stages_list/');
-        return data;
+        
+        if (data.status === 200) {
+            return { isSuccess:true, data: data.data };
+        }
+
+        return { isSuccess: false, data: null };
     },
 
     getTasksList: async (page) => {
@@ -56,14 +61,35 @@ const tasks = {
         return { isSuccess: false, data: null };
     },
 
+    completeAgreement: async (id, agreement_id) => {
+        let data = await axios.patch(`/api/tasks/${id}/complete_agreement/${agreement_id}/`);
+
+        if (data.status === 200) {
+            return { isSuccess:true, data: data.data };
+        }
+
+        return { isSuccess: false, data: null };
+    },
+
     saveDesignData: async (id, {  VD, ND, PRG, description, agreements }) => {
-        console.log('sdads')
         let data = await axios.post(`/api/tasks/${id}/save_design_data/`, {
             VD: VD,
             ND: ND,
             PRG: PRG,
             description: description,
             agreements: agreements,
+        });
+
+        if (data.status === 200) {
+            return { isSuccess:true, data: data.data };
+        }
+
+        return { isSuccess: false, data: null };
+    },
+
+    saveEstimationData: async (id, {  cost }) => {
+        let data = await axios.post(`/api/tasks/${id}/save_estimation_data/`, {
+            cost: cost
         });
 
         if (data.status === 200) {
