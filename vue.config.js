@@ -16,5 +16,12 @@ module.exports = defineConfig({
       .rule('svg')
       .test(() => false)
       .use('file-loader')
+
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title = 'Партнер'
+        return args
+      })
   }
 })

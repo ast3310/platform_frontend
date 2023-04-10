@@ -1,6 +1,6 @@
 <template>
     <BaseLayout>
-        <ProjectConsole v-if="!!task" />
+        <ProjectConsole v-if="!!task" :isCurrentUser="isCurrentUser"/>
         <section class="view">
             <ul class="stages"
                 v-if="!!task?.agreements && (isHarmonization || isFinished )">
@@ -52,7 +52,9 @@ export default {
     async mounted() {
         this.$store.commit(TASK_CARD_SET, null);
         EventEmitter.$emit('pageIsLoading');
-        await this.fetchTask();
+        await this.fetchTask(this.id);
+        EventEmitter.$on('notify__task_changed', this.taskChanged);
+        this.isLoading = false;
     },
 
     computed: {
@@ -65,7 +67,7 @@ export default {
             return this.task.stages[index];
         },
         isCurrentUser() {
-            return this.nowStageData.executor_id == this.currentUser.id;
+            return this.nowStageData?.executor_id == this.currentUser.id;
         },
         isDesignStage() {
             return this.task.now_stage_type === DESIGN;
@@ -88,20 +90,25 @@ export default {
     },
 
     methods: {
-        async fetchTask() {
+        async fetchTask(id) {
             const { success } = await this.$store.dispatch(TASK_FETCH_ONE, {
-                id: this.id,
+                id: id,
             });
 
             if (!success) {
                 this.$router.push("/404");
             }
-
-            this.isLoading = false;
         },
 
         setChatLoaded() {
             this.chatIsLoading = false;
+        },
+
+        taskChanged(e) {
+            if (e.executor_id !== this.currentUser.id 
+            && e.task_id === this.task?.id) {
+                this.fetchTask(this.id);
+            }
         }
     },
 

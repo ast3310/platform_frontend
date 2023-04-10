@@ -52,6 +52,13 @@ const routes = [
     },
   },
   {
+    path: '/activate',
+    name: 'activate',
+    component: () => import('../views/ActivateView.vue'),
+    meta: { },
+  },
+  
+  {
     path: "/404",
     name: '404',
     component: () => import('../views/NotFoundView.vue'),

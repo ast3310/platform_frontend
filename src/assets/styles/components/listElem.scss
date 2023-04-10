@@ -2,6 +2,10 @@
     &-param {
         display: flex;
         justify-content: center;
+
+        &_overflow {
+            overflow: hidden;
+        }
     }
     &-content {
         padding: 5px 10px;
@@ -104,11 +108,12 @@
     }
 
     &-param8 {
-        grid-column: 14 / 20;
+        grid-column: 14 / 17;
+        overflow: hidden;
     }
 
     &-param9 {
-        grid-column: 21 / 22;
+        grid-column: 18 / 22;
     }
 
     &-param10 {

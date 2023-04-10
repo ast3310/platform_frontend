@@ -50,6 +50,8 @@ export default {
         EventEmitter.$emit('pageIsLoading');
         this.isLoading = true;
 
+        this.isProfileOrAdmin();
+
         await this.fetchUser();
 
         const topics_data = (await users.getTopics(this.id)).data;
@@ -87,7 +89,7 @@ export default {
         },
 
         isProfileOrAdmin() {
-            if (!isProfile && !this.currentUser.is_staff) {
+            if (!this.isProfile && !this.currentUser.is_staff) {
                 this.$router.push("/404");
             }
         },
@@ -116,7 +118,6 @@ export default {
                     }
                 }
             }
-            console.log(this.selectedRoles);
         },
 
         roleToChange(e) {
@@ -129,8 +130,6 @@ export default {
             } else {
                 this.selectedRoles.splice(idx, 1);
             }
-
-            console.log(this.selectedRoles);
         },
 
         setTopics() {

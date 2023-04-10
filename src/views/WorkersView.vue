@@ -10,15 +10,15 @@
         <li class="view-param">Пароль</li>
         <li class="view-param">Дата рождения</li>
         <li class="view-param">Адрес</li>
-        <li class="view-param">Авто</li>
         <li class="view-param">Деятельность</li>
+        <li class="view-param">Авто</li>
         <li class="view-param">Админ</li>
       </ul>
       <ul class="view-list view-list--workers">
         <WorkersItem @click="$router.push({ path: `/userSettings/${item.id}` })" 
             :index="index" :worker="item" v-for="(item, index) in users" />
 
-        <Observer v-if="existsNextPage" />
+        <Observer v-if="existsNextPage" @intersect="fetchWorkers" />
         <Loader v-if="existsNextPage" />
       </ul>
     </section>

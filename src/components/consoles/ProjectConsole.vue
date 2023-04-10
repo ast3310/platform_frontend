@@ -1,9 +1,8 @@
 <template>
     <section class="console">
         <div class="console-header">
-            <button class="console_button button" @click="openConfirm">Этап завершён</button>
+            <button class="console_button button" v-if="isCurrentUser" @click="openConfirm">Этап завершён</button>
             <button class="console_button button">Остановка цикла</button>
-            <button class="console_button button">Выйти</button>
             <p class="console_projectName">{{ task.cipher }}</p>
         </div>
         <div class="console-content">
@@ -114,5 +113,11 @@ export default {
             this.isLoading = false;
         }
     },
+    props: {
+        isCurrentUser: {
+            type: Boolean,
+            required: true,
+        }
+    }
 }
 </script>

@@ -83,6 +83,18 @@ const users = {
         return { isSuccess: false, data: null };
 
     },
+
+    activateUser: async ({ token }) => {
+        let data = await axios.post('/api/users/activate/', {
+            token: token
+        });
+
+        if (data.status === 204) {
+            return { isSuccess:true, data: data.data };
+        }
+
+        return { isSuccess: false, data: null };
+    }
 }
 
 export default users;

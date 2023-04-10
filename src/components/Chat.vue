@@ -47,6 +47,8 @@ import Observer from "./common/Observer.vue";
 
 import SendIcon from "../assets/images/svgs/send.svg"
 
+import { websocket_url } from '../config.js';
+
 import dateTime from '../utils/dateTime';
 
 export default {
@@ -130,7 +132,7 @@ export default {
         await this.fetchMessages();
 
         this.connection = new WebSocket(
-            `ws://localhost:8000/ws/chat/${this.task.id}/?token=${this.currentUser.token}`
+            `${websocket_url}/ws/chat/${this.task.id}/?token=${this.currentUser.token}`
         )
 
         this.connection.onmessage = this.getMessage;

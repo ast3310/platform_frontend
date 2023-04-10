@@ -16,6 +16,8 @@
                     <li @click="selectUser" :data-user="index" class="card-list-item" v-for="(user, index) in users">
                         {{ user.last_name }} {{ user.first_name[0] }}.{{ user.middle_name[0] }}
                     </li>
+                    <Observer v-if="existsNextPage" @intersect="fetchUsers" />
+                    <Loader v-if="existsNextPage" />
                 </ul>
             </div>
         </div>
@@ -31,6 +33,9 @@
 import users from '../api/users';
 import EventEmitter from '../utils/EventEmitter';
 
+import Observer from './common/Observer.vue';
+import Loader from './common/Loader.vue';
+
 import dateTime from '../utils/dateTime.js';
 
 export default {
@@ -38,19 +43,28 @@ export default {
 
     data: () => ({
         isChoosed: false,
-        page: 1,
+        page: 0,
         users: [],
 
         selectedUser: null,
         isLoaded: true,
         isAddTask: false,
+
+        existsNextPage: false,
     }),
+
+    components: {
+        Observer,
+        Loader
+    },
 
     async mounted() {
         if (this.isEditable) {
+            this.$emit("executorsLoading");
             await this.fetchUsers();
             EventEmitter.$on('addTask', this.checkSelect);
             EventEmitter.$on('taskClearInputs', this.unselectUser);
+            this.$emit("executorsLoaded");
         }
     },
 
@@ -68,16 +82,17 @@ export default {
 
     methods: {
         async fetchUsers() {
-            this.$emit("executorsLoading");
+            this.page += 1;
             const { isSuccess, data } = await users.getList({
                 page: this.page,
                 topic_id: this.topic_id,
                 role: this.card.stage_type,
             });
 
-            if (isSuccess === true) this.users = [...this.users, ...data.results];
-
-            this.$emit("executorsLoaded");
+            if (isSuccess === true) {
+                this.existsNextPage = !!data.next;
+                this.users = [...this.users, ...data.results];
+            }
         },
 
         selectUser(e) {
