@@ -55,7 +55,7 @@ const routes = [
     path: '/activate',
     name: 'activate',
     component: () => import('../views/ActivateView.vue'),
-    meta: { },
+    meta: {},
   },
   
   {

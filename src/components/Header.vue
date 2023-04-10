@@ -5,18 +5,18 @@
         <Logo @click="$router.push({ path: '/' })" style="cursor: pointer;" />
       </div>
       <nav class="nav">
-        <li class="nav-item"><router-link class="nav-item--link link" to="/workers">
+        <li v-if="currentUser?.is_staff" class="nav-item"><router-link class="nav-item--link link" to="/workers">
             <div class="nav-item_image">
               <ClientsIcon/>
             </div>
             <div class="nav-item_name">Сотрудники</div>
           </router-link></li>
-        <li class="nav-item"><a class="nav-item--link link" href="clients.html">
+        <li class="nav-item"><router-link class="nav-item--link link" to="/agreements">
             <div class="nav-item_image">
               <WorkersIcon/>
             </div>
-            <div class="nav-item_name">Клиенты</div>
-          </a></li>
+            <div class="nav-item_name">Согласующие</div>
+          </router-link></li>
       </nav>
       <div class="user">
         <div class="user_settings">
